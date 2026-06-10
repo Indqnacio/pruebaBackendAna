@@ -23,16 +23,16 @@ export const personajeSchema = new mongoose.Schema({
     skin_color:{
         type:String
     },
-    films:{
+   /* films:{
         type: Schema.Types.ObjectId,
         ref:'Pelicula',
         required: true
-    },
-    homeworld:{
+    },*/
+    /*homeworld:{
         type: Schema.Types.ObjectId,
         ref:'Planeta',
         required: true
-    },
+    },/*
     species:{
         type: Schema.Types.ObjectId,
         ref:'Especie',
@@ -47,7 +47,7 @@ export const personajeSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref:'Vehiculo',
         required: true
-    }
+    }*/
 },{
     timestamps: true
 })

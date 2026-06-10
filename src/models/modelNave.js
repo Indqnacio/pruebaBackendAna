@@ -31,6 +31,9 @@ export const naveSchema = new mongoose.Schema({
     consumables:{
         type:String
     },
+    api_id:{
+        type:String
+    }
 },{
     timestamps: true
 });

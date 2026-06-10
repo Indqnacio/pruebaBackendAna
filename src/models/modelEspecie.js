@@ -25,11 +25,11 @@ export const especieSchema = new mongoose.Schema({
     language:{
         type:String
     },
-    homeworld:{
+   /* homeworld:{
         type: Schema.Types.ObjectId,
         ref:'Planeta',
         required: true
-    }
+    }*/
 },{
     timestamps: true
 });
