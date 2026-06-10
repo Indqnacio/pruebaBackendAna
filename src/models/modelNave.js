@@ -1,5 +1,42 @@
 import mongoose from "mongoose";
 
 export const naveSchema = new mongoose.Schema({
-
-})
+    nombre:{
+        type:String,
+        required:true},
+    modelo:{
+        type:String,
+        required:true},
+    clase:{
+        type:String,
+    },
+    tamaño:{
+        type:String
+    },
+    num_pasajeros:{
+        type:String
+    },
+    max_velocidad_atmosferica:{
+        type:String
+    },
+    hiperimpulsor:{
+        type:String
+    },
+    MGLT:{
+        type:String
+    },
+    capacidad_carga:{
+        type:String
+    },
+    tiempo_max_combustibles:{
+        type:String
+    },
+    createdAt:{
+        type:Date,
+        default:Date.now
+    },
+    updatedAt:{
+        type:Date,
+        default:Date.now
+    }
+});
