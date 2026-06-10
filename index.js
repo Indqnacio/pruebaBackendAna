@@ -3,7 +3,7 @@
 import mongoose from 'mongoose';
 import express from'express';
 import dotenv from 'dotenv';
-
+import { seedDB } from './seed.js';
 dotenv.config();
 
 const app = express();
@@ -19,4 +19,4 @@ const app = express();
   }
 }
 connectDB();
-console.log('Hello, World!');
+seedDB();

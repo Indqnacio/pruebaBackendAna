@@ -1,42 +1,37 @@
 import mongoose from "mongoose";
 
 export const naveSchema = new mongoose.Schema({
-    nombre:{
+    name:{
         type:String,
         required:true},
-    modelo:{
+    model:{
         type:String,
         required:true},
-    clase:{
+    starship_class:{
         type:String,
     },
-    tamaño:{
+    length:{
         type:String
     },
-    num_pasajeros:{
+    passengers:{
         type:String
     },
-    max_velocidad_atmosferica:{
+    max_atmosphering_speed:{
         type:String
     },
-    hiperimpulsor:{
+    hyperdrive_rating:{
         type:String
     },
     MGLT:{
         type:String
     },
-    capacidad_carga:{
+    cargo_capacity:{
         type:String
     },
-    tiempo_max_combustibles:{
+    consumables:{
         type:String
     },
-    createdAt:{
-        type:Date,
-        default:Date.now
-    },
-    updatedAt:{
-        type:Date,
-        default:Date.now
-    }
+},{
+    timestamps: true
 });
+export const Nave = mongoose.model('Nave', naveSchema);

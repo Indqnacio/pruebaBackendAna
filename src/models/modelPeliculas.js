@@ -1,21 +1,17 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 export const peliculaSchema = new mongoose.Schema({
-    nombre:{
+    title:{
         type:String,
-        required:[true, "El nombre es obligatorio"]},
+        required:true},
     director:{
         type:String,
-        required:[true, "El director es obligatorio"]},
-    productor:{
+        required:true},
+    producer:{
         type:String,
-        required:[true, "El productor es obligatorio"]},
-    createdAt:{
-        type:Date,
-        default:Date.now
-    },
-    updatedAt:{
-        type:Date,
-        default:Date.now
-    }
+        required:true},
+},{
+    timestamps: true
 });
+
+export const Pelicula = mongoose.model('Pelicula', peliculaSchema)

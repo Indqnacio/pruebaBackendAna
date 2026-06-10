@@ -1,36 +1,32 @@
 import mongoose from "mongoose";
 
 export const especieSchema = new mongoose.Schema({
-    nombre:{
+    name:{
         type: String,
         required:true},
-    clasificacion:{
+    classification:{
         type: String},
-    designacion:{
+    designation:{
         type: String},
-    promedio_altura:{
+    average_height:{
         type: String},
-    promedio_vida:{
+    average_lifespan:{
         type:String
     },
-    color_ojos:{
+    eye_colors:{
         type:String
     },
-    color_cabello:{
+    hair_colors:{
         type:String
     },
-    color_piel:{
+    skin_colors:{
         type:String
     },
-    lenguaje:{
+    language:{
         type:String
-    },
-    createdAt:{
-        type:Date,
-        default:Date.now
-    },
-    updatedAt:{
-        type:Date,
-        default:Date.now
     }
-})
+},{
+    timestamps: true
+});
+
+export const Especie = mongoose.model('Especie', especieSchema);

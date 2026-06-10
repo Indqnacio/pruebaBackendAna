@@ -1,41 +1,37 @@
 import mongoose from "mongoose";
 
 export const planetaSchema = new mongoose.Schema({
-    nombre:{
+    name:{
         type: String,
         required: true
     },
-    diametro:{
+    diameter:{
         type: String,
     },
-    periodo_rotacion:{
+    rotation_period:{
         type:String
     },
-    periodo_orbital:{
+    orbital_period:{
         type:String
     },
-    gravedad:{
+    gravity:{
         type:String
     },
-    poblacion:{
+    population:{
         type:String
     },
-    clima:{
+    climate:{
         type:String
     },
-    terreno:{
+    terrain:{
         type:String
     },
-    porcentaje_agua:{
+    surface_water:{
         type:String
-    },
-    createdAt:{
-        type:Date,
-        default:Date.now
-    },
-    updatedAt:{
-        type:Date,
-        default:Date.now
     }
     
+},{
+    timestamps: true
 });
+
+export const Planeta = mongoose.model('Planeta', planetaSchema);

@@ -1,34 +1,29 @@
 import mongoose from "mongoose";
 
 export const personajeSchema = new mongoose.Schema({
-    nombre:{
+    name:{
         type: String,
         required:true},
-    fecha_nac:{
+    birth_year:{
         type: String},
-    color_ojos:{
+    eye_color:{
         type: String},
-    genero:{
+    gender:{
         type:String
     },
-    color_cabello:{
+    hair_color:{
         type:String
     },
-    altura:{
+    height:{
         type:String
     },
-    masa:{
+    mass:{
         type:String
     },
-    color_piel:{
+    skin_color:{
         type:String
-    },
-    createdAt:{
-        type:Date,
-        default:Date.now
-    },
-    updatedAt:{
-        type:Date,
-        default:Date.now
     }
+},{
+    timestamps: true
 })
+export const Personaje = mongoose.model('Personaje', personajeSchema)
