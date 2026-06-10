@@ -5,7 +5,7 @@ import express from'express';
 import dotenv from 'dotenv';
 import { seedDB } from './seed.js';
 dotenv.config();
-
+const port = process.env.PORT || 3000;
 const app = express();
  const connectDB = async () => {
   try {
@@ -18,5 +18,12 @@ const app = express();
     process.exit(1);
   }
 }
+app.listen(port, () => {
+  console.log("Servidor escuchando en el puerto 3000")
+})
+
+app.get('/', (req, res) => {
+  res.send("Hola");
+})
 connectDB();
 seedDB();

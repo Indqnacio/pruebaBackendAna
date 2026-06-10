@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 export const especieSchema = new mongoose.Schema({
     name:{
@@ -24,6 +24,11 @@ export const especieSchema = new mongoose.Schema({
     },
     language:{
         type:String
+    },
+    homeworld:{
+        type: Schema.Types.ObjectId,
+        ref:'Planeta',
+        required: true
     }
 },{
     timestamps: true

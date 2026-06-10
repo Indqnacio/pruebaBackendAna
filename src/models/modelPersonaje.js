@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import { Schema } from "mongoose";
 export const personajeSchema = new mongoose.Schema({
     name:{
         type: String,
@@ -22,6 +22,31 @@ export const personajeSchema = new mongoose.Schema({
     },
     skin_color:{
         type:String
+    },
+    films:{
+        type: Schema.Types.ObjectId,
+        ref:'Pelicula',
+        required: true
+    },
+    homeworld:{
+        type: Schema.Types.ObjectId,
+        ref:'Planeta',
+        required: true
+    },
+    species:{
+        type: Schema.Types.ObjectId,
+        ref:'Especie',
+        required: true
+    },
+    starships:{
+        type: Schema.Types.ObjectId,
+        ref:'Nave',
+        required: true
+    },
+    vehicles:{
+        type: Schema.Types.ObjectId,
+        ref:'Vehiculo',
+        required: true
     }
 },{
     timestamps: true
