@@ -65,3 +65,22 @@ export async function getSingleNave(data){
         console.error("Error al consultar nave ", error);
     }
 }
+export async function findDuplicates_Nave(data){
+    try{
+        const nave = await Nave.find({
+            name:data.name,
+            model: data.model,
+            starship_class: data.starship_class,
+            length: data.length,
+            passengers: data.passengers,
+            max_atmosphering_speed: data.max_atmosphering_speed,
+            hyperdrive_rating: data.hyperdrive_rating,
+            MGLT: data.MGLT,
+            cargo_capacity: data.cargo_capacity,
+            consumables: data.consumables
+        })
+        return nave
+    }catch(error){
+        console.error("Error encontrando duplicados de nave ", error)
+    }
+}

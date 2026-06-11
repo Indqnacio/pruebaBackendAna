@@ -65,3 +65,22 @@ export async function getPlan_Perso(){
         console.error("Error al obtener el planeta ", error);
     }
 }
+
+export async function findDuplicatesPlaneta(data){
+    try{
+        const planeta = await Planeta.find({
+            name:data.name,
+            diameter: data.diameter,
+            rotation_period: data.rotation_period,
+            orbital_period: data.orbital_period,
+            gravity: data.gravity,
+            population: data.population,
+            climate: data.climate,
+            terrain: data.terrain,
+            surface_water: data.surface_water
+        })
+        return personaje
+    }catch(error){
+        console.error("Error encontrando duplicados de personaje ", error)
+    }
+}

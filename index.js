@@ -2,11 +2,14 @@
 
 import mongoose from 'mongoose';
 import express from'express';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import { seedDB } from './seed.js';
+import apiRoues from './src/routes/index.js'
 dotenv.config();
 const port = process.env.PORT || 3000;
 const app = express();
+
  const connectDB = async () => {
   try {
     console.log('Connecting to MongoDB...');
@@ -18,6 +21,10 @@ const app = express();
     process.exit(1);
   }
 }
+app.use(cors());
+app.use(express.json())
+app.use(apiRoues);
+
 app.listen(port, () => {
   console.log("Servidor escuchando en el puerto 3000")
 })
@@ -26,4 +33,4 @@ app.get('/', (req, res) => {
   res.send("Hola");
 })
 connectDB();
-seedDB();
+//seedDB();

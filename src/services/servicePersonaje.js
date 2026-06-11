@@ -70,3 +70,24 @@ export async function personaje_Nombre(data){
         console.error("Error al obtener personaje")
     }
 }
+export async function findDuplicatesPerso(data){
+    try{
+        const personaje = await Personaje.find({
+            name:data.name,
+            birth_year: data.birth_year,
+            eye_color: data.eye_color,
+            gender: data.gender,
+            hair_color: data.hair_color,
+            height: data.height,
+            mass: data.mass,
+            skin_color: data.skin_color,
+            films: data.films,
+            homeworld: data.homeworld,
+            species: data.species,
+            vehicles: data.vehicles,
+        })
+        return personaje
+    }catch(error){
+        console.error("Error encontrando duplicados de personaje ", error)
+    }
+}

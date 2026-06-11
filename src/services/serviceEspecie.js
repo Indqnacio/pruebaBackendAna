@@ -58,3 +58,23 @@ export async function getEsp_Perso(){
         console.error("Error al consultar especie ", error);
     }
 }
+
+export async function findDuplicates_Especie(data){
+    try{
+        const especie = await Especie.find({
+            name:data.name,
+            classification: data.classification,
+            designation: data.designation,
+            average_height: data.average_height,
+            average_lifespan: data.average_lifespan,
+            eye_colors: data.eye_colors,
+            hair_colors: data.hair_colors,
+            skin_colors: data.skin_colors,
+            language: data.language,
+            homeworld: data.homeworld
+        })
+        return especie
+    }catch(error){
+        console.error("Error encontrando duplicados de especie ", error)
+    }
+}

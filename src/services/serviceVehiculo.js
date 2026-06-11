@@ -66,3 +66,20 @@ export async function getSingleVehi(data){
         console.error("Error al consultar nave ", error);
     }
 }
+export async function findDuplicatesVehiculo(data){
+    try{
+        const planeta = await Planeta.find({
+            name:data.name,
+            model: data.model,
+            vehicle_class: data.vehicle_class,
+            length: data.length,
+            passengers: data.passengers,
+            max_atmosphering_speed: data.max_atmosphering_speed,
+            cargo_capacity: data.cargo_capacity,
+            consumables: data.consumables
+        })
+        return planeta
+    }catch(error){
+        console.error("Error encontrando duplicados de personaje ", error)
+    }
+}
