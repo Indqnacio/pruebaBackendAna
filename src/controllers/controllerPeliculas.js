@@ -32,10 +32,8 @@ export async function getSinPeli (req, res){
 }
 
 export async function getPersoPeli (req, res){
-    const {id} = req.body
-    //console.log(id)
+    
     const peliculas = await getPeli_Perso();
-    //console.log("peliculas ", peliculas)
     if(!peliculas){
         return res.status(404).json({error: 'NO hay peliculas encontradas'})
     }

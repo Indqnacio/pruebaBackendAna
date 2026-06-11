@@ -34,7 +34,7 @@ export async function actuEspecie(data){
 
 export async function getListaEspecie(){
     try{
-        const lista_especies = await Especie.find();
+        const lista_especies = await Especie.find().select();
         return lista_especies
     }catch(error){
         console.error("Error al consultar lista de especies ", error)

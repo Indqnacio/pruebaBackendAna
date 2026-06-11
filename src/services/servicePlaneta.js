@@ -11,7 +11,7 @@ export async function crearPlaneta(data){
 
 export async function actuPlaneta(data){
     try{
-        const planeta = await Planeta.findById(data._id);
+        const planeta = await Planeta.findById(data.id);
         if(planeta){
             planeta.name =  data.name||planeta.name;
            planeta.diameter = data.diameter||planeta.diameter;
@@ -32,7 +32,7 @@ export async function actuPlaneta(data){
 
 export async function borrPlaneta(data){
     try{
-        await Planeta.findByIdAndDelete(data._id)
+        await Planeta.findByIdAndDelete(data)
         return {message:"Borrado con exito"}
     }catch(error){
         console.error("Error al borrar planeta ", error)
@@ -41,7 +41,7 @@ export async function borrPlaneta(data){
 
 export async function getListaPlanetas(){
     try{
-        const planetas = await Planeta.find();
+        const planetas = await Planeta.find().select('_id name diameter rotation_period orbital_period gravity population climate terrain surface_water');
         return planetas
     } catch(error){
         console.error("Error al obtener lista de planetas ", error);
@@ -50,7 +50,7 @@ export async function getListaPlanetas(){
 
 export async function getSinglePlaneta(data){
     try{
-        const planeta = await Planeta.findById(data._id);
+        const planeta = await Planeta.findById(data).select('_id name diameter rotation_period orbital_period gravity population climate terrain surface_water');
         return planeta
     } catch(error){
         console.error("Error al obtener el planeta ", error);
@@ -79,7 +79,7 @@ export async function findDuplicatesPlaneta(data){
             terrain: data.terrain,
             surface_water: data.surface_water
         })
-        return personaje
+        return planeta
     }catch(error){
         console.error("Error encontrando duplicados de personaje ", error)
     }
