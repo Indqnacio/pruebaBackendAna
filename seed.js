@@ -93,12 +93,12 @@ export async function seedDB(){
         console.log("ESPECIES OBTENIDAS ")
         const data_especies_promise = await Promise.all(        data_especies.data.map(async (especie)=>{
             const planeta_origen = await axios.get(especie.url);
-            console.log("planeta de la api ", planeta_origen)
-            console.log()
+            //console.log("planeta de la api ", planeta_origen)
+            //console.log()
             const planeta_db = await Planeta.find({name: planeta_origen.name})
-            console.log("planeta ",planeta_db)
+            //console.log("planeta ",planeta_db)
             especie.homeworld=planeta_db._id
-            console.log("especie.homeworld ", especie.homeworld)
+            //console.log("especie.homeworld ", especie.homeworld)
         }))
 
 
@@ -157,18 +157,21 @@ export async function seedDB(){
             if(personaje.species.lenght>0){
                 let sp=[]
                 const species_promise = await Promise.all(
-                                    personaje.species.map(async (espe) => {
+                    personaje.species.map(async (espe) => {
                     const espe_propia = await axios.get(espe)
                     const espe_DB = await Especie.find({name: espe_propia.name})
+                    console.log("id especie ", espe_DB._id)
                     sp.push(espe_DB._id)
                 }))
                 personaje.species=sp;
+                console.log(personaje.species)
             }
             
         })
         )
         
         console.log("Insertando personajes")
+        console.log(data_personajes.data)
         await Personaje.insertMany(data_personajes.data);
         console.log("Personajes insertados correctamente ")
 

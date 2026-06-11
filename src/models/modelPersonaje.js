@@ -23,31 +23,31 @@ export const personajeSchema = new mongoose.Schema({
     skin_color:{
         type:String
     },
-    films:{
+    films:[{
         type: Schema.Types.ObjectId,
         ref:'Pelicula',
-        required: true
-    },
+        required: false
+    }],
     homeworld:{
         type: Schema.Types.ObjectId,
         ref:'Planeta',
         required: false
     },
-    species:{
+    species:[{
         type: Schema.Types.ObjectId,
         ref:'Especie',
         required: false
-    },
-    starships:{
+    }],
+    starships:[{
         type: Schema.Types.ObjectId,
         ref:'Nave',
         required: false
-    },
-    vehicles:{
+    }],
+    vehicles:[{
         type: Schema.Types.ObjectId,
         ref:'Vehiculo',
         required: false
-    }
+    }]
 },{
     timestamps: true
 })
