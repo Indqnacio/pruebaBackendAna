@@ -1,0 +1,67 @@
+import { Planeta } from "../models/modelPlaneta.js";
+
+export async function crearPlaneta(data){
+    try{
+        const newPlaneta = await Planeta.create(data);
+        return newPlaneta
+    }catch(error){
+        console.log("Error al crear planeta ", error)
+    }
+}
+
+export async function actuPlaneta(data){
+    try{
+        const planeta = await Planeta.findById(data._id);
+        if(planeta){
+            planeta.name =  data.name||planeta.name;
+           planeta.diameter = data.diameter||planeta.diameter;
+           planeta.rotation_period = data.rotation_period||planeta.rotation_period;
+           planeta.orbital_period = data.orbital_period||planeta.orbital_period
+           planeta.gravity = data.gravity||planeta.gravity
+           planeta.population=data.population||planeta.population
+           planeta.climate=data.climate||planeta.climate
+           planeta.terrain=data.terrain||planeta.terrain
+           planeta.surface_water=data.surface_water||planeta.surface_water
+           await planeta.save();
+        }
+        return planeta
+    }catch(error){
+        console.error("Error al actualizar planeta", error)
+    }
+}
+
+export async function borrPlaneta(data){
+    try{
+        await Planeta.findByIdAndDelete(data._id)
+        return {message:"Borrado con exito"}
+    }catch(error){
+        console.error("Error al borrar planeta ", error)
+    }
+}
+
+export async function getListaPlanetas(){
+    try{
+        const planetas = await Planeta.find();
+        return planetas
+    } catch(error){
+        console.error("Error al obtener lista de planetas ", error);
+    }
+}
+
+export async function getSinglePlaneta(data){
+    try{
+        const planeta = await Planeta.findById(data._id);
+        return planeta
+    } catch(error){
+        console.error("Error al obtener el planeta ", error);
+    }
+}
+
+export async function getPlan_Perso(){
+    try{
+        const planetas = await Planeta.find({},'_id name');
+        return planetas
+    } catch(error){
+        console.error("Error al obtener el planeta ", error);
+    }
+}
