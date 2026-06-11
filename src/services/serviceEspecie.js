@@ -11,7 +11,7 @@ export async function crearEspecie(data){
 
 export async function actuEspecie(data){
     try{
-        const especie = await Especie.findById(data);
+        const especie = await Especie.findById(data.id);
         if(especie){
             especie.name = data.name||especie.name
             especie.classification=data.classification|| especie.classification
@@ -34,7 +34,7 @@ export async function actuEspecie(data){
 
 export async function getListaEspecie(){
     try{
-        const lista_especies = await Especie.find().select();
+        const lista_especies = await Especie.find().select('name classification designation average_height average_lifespan eye_colors hair_colors skin_colors language homeworld');
         return lista_especies
     }catch(error){
         console.error("Error al consultar lista de especies ", error)
@@ -43,7 +43,7 @@ export async function getListaEspecie(){
 
 export async function getSingleEspecie(data){
     try{
-        const especie = await Especie.findById(data._id)
+        const especie = await Especie.findById(data).select('name classification designation average_height average_lifespan eye_colors hair_colors skin_colors language homeworld');
         return especie
     }catch(error){
         console.error("Error al consultar especie ", error);
@@ -76,5 +76,14 @@ export async function findDuplicates_Especie(data){
         return especie
     }catch(error){
         console.error("Error encontrando duplicados de especie ", error)
+    }
+}
+
+export async function borrarEsp(id){
+    try{
+        await Especie.findByIdAndDelete(id)
+        return {message:"Borrado con exito"}
+    } catch(error){
+        console.error("Error al borrar la especie ", error)
     }
 }
