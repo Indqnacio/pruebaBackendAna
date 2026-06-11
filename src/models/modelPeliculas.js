@@ -10,7 +10,7 @@ export const peliculaSchema = new mongoose.Schema({
     producer:{
         type:String,
         required:true},
-    api_id:{
+    url:{
         type:String
     }
 },{

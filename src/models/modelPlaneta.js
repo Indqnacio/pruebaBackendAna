@@ -29,7 +29,7 @@ export const planetaSchema = new mongoose.Schema({
     surface_water:{
         type:String
     },
-    api_id:{
+    url:{
         type:String
     }
     
