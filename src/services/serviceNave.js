@@ -11,10 +11,10 @@ export async function crearNave(data){
 
 export async function actuNave(data){
     try{
-        const nave = await Nave.findById(data._id)
+        const nave = await Nave.findById(data.id)
         if(nave){
             nave.name=data.name||nave.name
-            nave.model=data.model||name.model
+            nave.model=data.model||nave.model
             nave.starship_class=data.starship_class||nave.starship_class
             nave.length=data.length||nave.length
             nave.passengers=data.passengers||nave.passengers
@@ -31,7 +31,7 @@ export async function actuNave(data){
     }
 }
 
-export default function borrNave(data){
+export async function borrNave(data){
     try{
         await Nave.findByIdAndDelete(data._id)
         return {message:"Borrado con exito"}
@@ -42,7 +42,7 @@ export default function borrNave(data){
 
 export async function getListaNave(){
     try{
-        const lista_naves = await Nave.find();
+        const lista_naves = await Nave.find().select('name model starship_class length passengers max_atmosphering_speed hyperdrive_rating MGLT cargo_capacity consumables');
         return lista_naves
     }catch(error){
         console.error("Error al consultar lista de naves ", error)
@@ -59,7 +59,7 @@ export async function getNave_Perso(){
 
 export async function getSingleNave(data){
     try{
-        const nave = await Nave.findById(data._id)
+        const nave = await Nave.findById(data._id).select('name model starship_class length passengers max_atmosphering_speed hyperdrive_rating MGLT cargo_capacity consumables');
         return nave
     }catch(error){
         console.error("Error al consultar nave ", error);
