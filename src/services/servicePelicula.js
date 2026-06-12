@@ -34,9 +34,11 @@ export async function borrarPeli(id){
     }
 }
 
-export async function getListaPelis(){
+export async function getListaPelis(page, limit){
     try{
-        const lista_pelis = await Pelicula.find({}, '_id title director producer');
+        const select='_id title director producer'
+        const options = {select:select,page: page, limit:limit, lean:true, }
+        const lista_pelis = await Pelicula.paginate({}, options);
         return lista_pelis
     } catch(error){
         console.error("Error al obtener lista de peliculas ", error)
