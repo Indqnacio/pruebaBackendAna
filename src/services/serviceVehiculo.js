@@ -48,9 +48,11 @@ export async function borrVehi(data){
     }
 }
 
-export async function getListaVehi(){
+export async function getListaVehi(page,limit){
     try{
-        const lista_vehiculos = await Vehiculo.find().select('name model vehicle_class length passengers max_atmosphering_speed cargo_capacity consumables');
+        const select='name model vehicle_class length passengers max_atmosphering_speed cargo_capacity consumables'
+        const options = {select:select,page: page, limit:limit, lean:true, }
+        const lista_vehiculos = await Vehiculo.paginate({},options);
         return lista_vehiculos
     }catch(error){
         console.error("Error al consultar lista de vehiculos ", error)

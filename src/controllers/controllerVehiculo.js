@@ -12,7 +12,11 @@ export async function postVehiculo (req, res){
 }
 
 export async function getVehiculos (req, res){
-    const vehiculos = await getListaVehi();
+    const page = parseInt(req.query.page, 10) 
+    console.log(page)
+    const limit = parseInt(req.query.limit,10) 
+    console.log(limit)
+    const vehiculos = await getListaVehi(page,limit);
     //console.log("peliculas ", peliculas)
     if(!vehiculos){
         return res.status(404).json({error: 'NO hay vehiculos encontrados'})
