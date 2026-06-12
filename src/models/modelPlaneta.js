@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import mongoosePaginate from "mongoose-paginate-v2";
 export const planetaSchema = new mongoose.Schema({
     name:{
         type: String,
@@ -36,5 +36,5 @@ export const planetaSchema = new mongoose.Schema({
 },{
     timestamps: true
 });
-
+planetaSchema.plugin(mongoosePaginate)
 export const Planeta = mongoose.model('Planeta', planetaSchema);

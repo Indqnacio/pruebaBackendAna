@@ -22,7 +22,7 @@ export async function getEspecies (req, res){
     if(!especies){
         return res.status(404).json({error: 'NO hay especies encontradas'})
     }
-    return res.status(200).json({data:especies})
+    return res.status(200).json(especies)
 }
 
 export async function getSinEspecie (req, res){

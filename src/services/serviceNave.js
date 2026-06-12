@@ -40,9 +40,11 @@ export async function borrNave(data){
     }
 }
 
-export async function getListaNave(){
+export async function getListaNave(page, limit){
     try{
-        const lista_naves = await Nave.find().select('name model starship_class length passengers max_atmosphering_speed hyperdrive_rating MGLT cargo_capacity consumables');
+        const select = 'name model starship_class length passengers max_atmosphering_speed hyperdrive_rating MGLT cargo_capacity consumables'
+        const options = {select:select,page: page, limit:limit, lean:true, }
+        const lista_naves = await Nave.paginate({}, options);
         return lista_naves
     }catch(error){
         console.error("Error al consultar lista de naves ", error)

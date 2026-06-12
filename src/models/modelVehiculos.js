@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import mongoosePaginate from "mongoose-paginate-v2";
 const vehiculoSchema = new mongoose.Schema({
     name:{
         type: String,
@@ -33,4 +33,5 @@ const vehiculoSchema = new mongoose.Schema({
 },{
     timestamps: true
 });
+vehiculoSchema.plugin(mongoosePaginate)
 export const Vehiculo = mongoose.model('Vehiculo',vehiculoSchema);

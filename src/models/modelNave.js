@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import mongoosePaginate from "mongoose-paginate-v2";
 export const naveSchema = new mongoose.Schema({
     name:{
         type:String,
@@ -37,4 +37,5 @@ export const naveSchema = new mongoose.Schema({
 },{
     timestamps: true
 });
+naveSchema.plugin(mongoosePaginate)
 export const Nave = mongoose.model('Nave', naveSchema);

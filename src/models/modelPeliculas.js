@@ -1,5 +1,5 @@
 import mongoose, { mongo } from "mongoose";
-
+import mongoosePaginate from "mongoose-paginate-v2";
 export const peliculaSchema = new mongoose.Schema({
     title:{
         type:String,
@@ -16,5 +16,5 @@ export const peliculaSchema = new mongoose.Schema({
 },{
     timestamps: true
 });
-
+peliculaSchema.plugin(mongoosePaginate)
 export const Pelicula = mongoose.model('Pelicula', peliculaSchema)

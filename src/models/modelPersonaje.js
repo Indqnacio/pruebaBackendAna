@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
+import mongoosePaginate from "mongoose-paginate-v2";
 export const personajeSchema = new mongoose.Schema({
     name:{
         type: String,
@@ -51,4 +52,5 @@ export const personajeSchema = new mongoose.Schema({
 },{
     timestamps: true
 })
+personajeSchema.plugin(mongoosePaginate)
 export const Personaje = mongoose.model('Personaje', personajeSchema)
