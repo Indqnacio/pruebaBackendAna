@@ -39,9 +39,11 @@ export async function borrPlaneta(data){
     }
 }
 
-export async function getListaPlanetas(){
+export async function getListaPlanetas(page, limit){
     try{
-        const planetas = await Planeta.find().select('_id name diameter rotation_period orbital_period gravity population climate terrain surface_water');
+        const select='_id name diameter rotation_period orbital_period gravity population climate terrain surface_water'
+        const options={select:select,page: page, limit:limit, lean:true, }
+        const planetas = await Planeta.paginate({}, options);
         return planetas
     } catch(error){
         console.error("Error al obtener lista de planetas ", error);
