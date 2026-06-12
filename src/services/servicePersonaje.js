@@ -1,6 +1,6 @@
 import {Personaje} from '../models/modelPersonaje.js'
 
-export async function crearPersonaje(data){
+export async function createCharacter(data){
      try{
         const newPerso = await Personaje.create(data);
         return newPerso
@@ -9,7 +9,7 @@ export async function crearPersonaje(data){
      }
 }
 
-export async function actuPerso(data){
+export async function updateCharacter(data){
     try{
         const personaje = await Personaje.findById(data.id)
         if(personaje){
@@ -31,31 +31,34 @@ export async function actuPerso(data){
             return (personaje)
         }
     }catch(error){
-        console.error("Error al actualizar pelicula ", error)
+        console.error("Error al actualizar personaje ", error)
     }
 }
 
-export async function borrarPerso(data){
+export async function dropCharacter(data){
     try{
-        await Personaje.findByIdAndDelete(data)
-        return {message:"Borrado con exito"}
+        const deleted = await Personaje.findByIdAndDelete(data)
+        if(deleted){
+            return {message:"Borrado con éxito"}
+        }
+        return null
     } catch(error){
         console.error("Error al borrar el personaje ", error)
     }
 }
 
-export async function getListaPerso(page, limit){
+export async function getAllCharacters(page, limit){
     try{
         const select='_id name birth_year eye_color gender hair_color height mass skin_color films species starships vehicles'
         const options = {select:select,page: page, limit:limit, lean:true, }
         const lista_personajes = await Personaje.paginate({}, options);
         return lista_personajes
     } catch(error){
-        console.error("Error al obtener lista de peliculas ", error)
+        console.error("Error al obtener lista de personajes ", error)
     }
 }
 
-export async function singlePerso(data){
+export async function getSingleCharacter(data){
     try{
         const personaje = await Personaje.findById(data).select('_id name birth_year eye_color gender hair_color height mass skin_color films species starships vehicles');;
         return personaje
@@ -64,29 +67,18 @@ export async function singlePerso(data){
     }
 }
 
-export async function personaje_Nombre(data){
+export async function getCharactersByName(data){
     try{
-        const personaje = await Personaje.findOne({name: data.name}).select('_id name birth_year eye_color gender hair_color height mass skin_color films species starships vehicles');
+        const personaje = await Personaje.findOne({name: data}).select('_id name birth_year eye_color gender hair_color height mass skin_color films species starships vehicles');
         return personaje
     }catch(error){
         console.error("Error al obtener personaje")
     }
 }
-export async function findDuplicatesPerso(data){
+export async function findDuplicatesCharacter(data){
     try{
         const personaje = await Personaje.find({
-            name:data.name,
-            birth_year: data.birth_year,
-            eye_color: data.eye_color,
-            gender: data.gender,
-            hair_color: data.hair_color,
-            height: data.height,
-            mass: data.mass,
-            skin_color: data.skin_color,
-            films: data.films,
-            homeworld: data.homeworld,
-            species: data.species,
-            vehicles: data.vehicles,
+            name:data.name
         })
         return personaje
     }catch(error){

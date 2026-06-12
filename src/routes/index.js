@@ -1,54 +1,54 @@
 import express from 'express';
-import { postPeliculas, getPeliculas, getSinPeli, putPeliculas, getPersoPeli, delePeliculas } from "../controllers/controllerPeliculas.js";
-import { delePlanetas, putPlanetas, getPersoPlane, getSinPlaneta, getPlanetas,postPlaneta } from '../controllers/controllerPlaneta.js';
-import { delEspecie, putEspecie, getPersoEspe, getSinEspecie, getEspecies,postEspecie } from '../controllers/controllerEspecie.js';
-import { postNave, putNaves, deleNave, getNaves, getPersoNave, getSin_Nave } from '../controllers/controllerNave.js';
-import { deleVehiculo, getPerso_Vehi, getSin_Vehi, getVehiculos, postVehiculo, putVehiculos } from '../controllers/controllerVehiculo.js';
-import { postPersonaje, putPerso, getPersonajes, getSinglePersonaje, findByNombre, deletePersonaje } from '../controllers/controllerPersonaje.js';
+import { postMovies, getMovies, getMovie, putMovie, getMovieCharacter, deleteMovie } from "../controllers/controllerPeliculas.js";
+import { deletePlanet, putPlanet, getPlanetsCharacters, getSinglePlanet, getPlanets,postPlanet } from '../controllers/controllerPlaneta.js';
+import { deleteSpecie, putSpecie, getSpeciesCharacters, getSpecie, getSpecies,postSpecie } from '../controllers/controllerEspecie.js';
+import { postStarship, putStarships, deleteStarship, getStarships, getStarshipsCharacters, getStarship } from '../controllers/controllerNave.js';
+import { deleteVehicle, getVehiclesChracters, getVehicle, getVehicles, postVehicle, putVehicle } from '../controllers/controllerVehiculo.js';
+import { postCharacter, putCharacter, getCharacters, getCharacter, charactersByName, deleteCharacter } from '../controllers/controllerPersonaje.js';
 
 const router = express.Router();
 
-router.get('/getPeliPerso', getPersoPeli),
-router.get('/getPeli', getPeliculas),
-router.post('/getSinglePeli', getSinPeli),
-router.post('/postPeli', postPeliculas),
-router.put('/putPeli', putPeliculas),
-router.delete('/delePeli', delePeliculas)
+router.get('/getPeliPerso', getMovieCharacter),
+router.get('/getPelis', getMovies),
+router.post('/getSinglePeli', getMovie),
+router.post('/postPeli', postMovies),
+router.put('/putPeli', putMovie),
+router.delete('/delePeli', deleteMovie)
 
-router.get('/getPlaneta', getPlanetas),
-router.post('/getSinglePlane', getSinPlaneta),
-router.get('/getPlanetaPerso', getPersoPlane),
-router.post('/postPlaneta',postPlaneta),
-router.put('/putPlaneta',putPlanetas),
-router.delete('/delePlaneta', delePlanetas),
+router.get('/getPlanetas', getPlanets),
+router.post('/getSinglePlane', getSinglePlanet),
+router.get('/getPlanetaPerso', getPlanetsCharacters),
+router.post('/postPlaneta',postPlanet),
+router.put('/putPlaneta',putPlanet),
+router.delete('/delePlaneta', deletePlanet),
 
-router.get('/getEspecies', getEspecies),
-router.post('/getSingleEspecie', getSinEspecie),
-router.get('/getEspeciePerso', getPersoEspe),
-router.post('/postEspecie',postEspecie),
-router.put('/putEspecie',putEspecie),
-router.delete('/deleEspecie', delEspecie)
+router.get('/getEspecies', getSpecies),
+router.post('/getSingleEspecie', getSpecie),
+router.get('/getEspeciePerso', getSpeciesCharacters),
+router.post('/postEspecie',postSpecie),
+router.put('/putEspecie',putSpecie),
+router.delete('/deleEspecie', deleteSpecie)
 
-router.get('/getNaves', getNaves),
-router.post('/getNave', getSin_Nave),
-router.get('/getNavePerso', getPersoNave),
-router.post('/postNave',postNave),
-router.put('/putNave', putNaves),
-router.delete('/deleNave',deleNave)
+router.get('/getNaves', getStarships),
+router.post('/getNave', getStarship),
+router.get('/getNavePerso', getStarshipsCharacters),
+router.post('/postNave',postStarship),
+router.put('/putNave', putStarships),
+router.delete('/deleNave',deleteStarship)
 
-router.get('/getVehiculos', getVehiculos),
-router.post('/getVehiculo', getSin_Vehi),
-router.get('/getVehiculoPerso', getPerso_Vehi),
-router.post('/postVehiculo', postVehiculo),
-router.put('/putVehiculo', putVehiculos),
-router.delete('/deleteVehiculo', deleVehiculo)
+router.get('/getVehiculos', getVehicles),
+router.post('/getVehiculo', getVehicle),
+router.get('/getVehiculoPerso', getVehiclesChracters),
+router.post('/postVehiculo', postVehicle),
+router.put('/putVehiculo', putVehicle),
+router.delete('/deleteVehiculo', deleteVehicle)
 
-router.get('/getPersonajes', getPersonajes)
-router.post('/getSinglePersonaje', getSinglePersonaje)
-router.post('/findByNombre', findByNombre)
-router.post('/postPersonaje', postPersonaje)
-router.put('/putPersonaje',putPerso)
-router.delete('/deletePersonaje', deletePersonaje)
+router.get('/getPersonajes', getCharacters)
+router.post('/getSinglePersonaje', getCharacter)
+router.post('/findByNombre', charactersByName)
+router.post('/postPersonaje', postCharacter)
+router.put('/putPersonaje',putCharacter)
+router.delete('/deletePersonaje', deleteCharacter)
 
 
 export default router

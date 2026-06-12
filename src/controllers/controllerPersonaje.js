@@ -1,68 +1,60 @@
-import {findDuplicatesPerso, crearPersonaje, actuPerso, getListaPerso, singlePerso, borrarPerso, personaje_Nombre} from "../services/servicePersonaje.js";
+import {findDuplicatesCharacter, createCharacter, updateCharacter, dropCharacter, getSingleCharacter, getAllCharacters,getCharactersByName} from "../services/servicePersonaje.js";
 
-export async function postPersonaje (req, res){
+export async function postCharacter (req, res){
    const data = req.body
-   console.log(data)
-    const duplicado = await findDuplicatesPerso(data)
-   // console.log(duplicado)
+    const duplicado = await findDuplicatesCharacter(data)
     if(duplicado.length>0){
-        return res.status(500).json({message:"el personaje ya esta registrado"})
+        return res.status(500).json({message:"El personaje ya está registrado"})
     }
-    const personaje = await crearPersonaje(data)
+    const personaje = await createCharacter(data)
     return res.status(200).json(personaje)
 }
 
-export async function getPersonajes (req, res){
+export async function getCharacters (req, res){
     const page = parseInt(req.query.page, 10) 
-    console.log(page)
     const limit = parseInt(req.query.limit,10) 
-    console.log(limit)
-    const personajes = await getListaPerso(page, limit);
-    //console.log("peliculas ", peliculas)
+    const personajes = await getAllCharacters(page, limit);
     if(!personajes){
-        return res.status(404).json({error: 'NO hay personajes encontrados'})
+        return res.status(404).json({error: 'No se encontraron personajes'})
     }
     return res.status(200).json(personajes)
 }
 
-export async function getSinglePersonaje (req, res){
+export async function getCharacter (req, res){
     const {id} = req.body
-   // console.log(id)
-    const personaje = await singlePerso(id);
-   // console.log("peliculas ", peliculas)
+    const personaje = await getSingleCharacter(id);
     if(!personaje){
-        return res.status(404).json({error: 'NO hay personaje encontrado'})
+        return res.status(404).json({error: 'No se encontraron personajes'})
     }
     return res.status(200).json(personaje)
 }
 
-export async function findByNombre (req, res){
+export async function charactersByName (req, res){
     const {name} = req.body
-    const personaje = await personaje_Nombre(name);
+    const personaje = await getCharactersByName(name);
     if(!personaje){
         return res.status(404).json({error: 'NO hay personaje encontrado'})
     }
     return res.status(200).json(personaje)
 }
 
-export async function putPerso(req, res){
+export async function putCharacter(req, res){
     const data = req.body
-    const duplicado = await findDuplicatesPerso(data)
+    const duplicado = await findDuplicatesCharacter(data)
     if(duplicado.length>0){
         return res.status(500).json({message:"el personaje ya esta registrado"})
     }
-
-    const personaje = await actuPerso(data)
-    if(personaje===null||!personaje){
-        console.log("nohay")
-        return res.status(500).json({message:"El personaje no existe"})
+    const existente = await getSingleCharacter(data.id)
+    if(!existente||existente==null){
+        return res.status(500).json({message:"No existe este personaje para actualizar"})
     }
+    const personaje = await updateCharacter(data)
     return res.status(200).json(personaje)
 }
 
-export async function deletePersonaje(req, res){
+export async function deleteCharacter(req, res){
     const {id} = req.body
-    const borrar = await borrarPerso(id)
+    const borrar = await dropCharacter(id)
     if(borrar!==null){
         return res.status(200).json({message:"Registro borrado con exito"})
     }

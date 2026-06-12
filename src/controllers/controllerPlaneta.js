@@ -1,63 +1,66 @@
-import {crearPlaneta, findDuplicatesPlaneta, actuPlaneta, getListaPlanetas, getPlan_Perso, getSinglePlaneta, borrPlaneta} from '../services/servicePlaneta.js'
+import {createPlanet, findDuplicatesPlanets, updatePlanet, getAllPlanets, getPlanetsForCharacters, getPlanet, dropPlanet} from '../services/servicePlaneta.js'
 
-export async function postPlaneta (req, res){
+export async function postPlanet (req, res){
    const data = req.body
-    const duplicado = await findDuplicatesPlaneta(data)
+    const duplicado = await findDuplicatesPlanets(data)
     console.log(duplicado)
     if(duplicado.length>0){
-        return res.status(500).json({message:"EL planeta ya esta registrada"})
+        return res.status(500).json({message:"El planeta ya está registrado"})
     }
-    const planeta = await crearPlaneta(data)
+    const planeta = await createPlanet(data)
     return res.status(200).json(planeta)
 }
 
-export async function getPlanetas (req, res){
+export async function getPlanets (req, res){
     const page = parseInt(req.query.page, 10) 
-    console.log(page)
+   // console.log(page)
     const limit = parseInt(req.query.limit,10) 
-    console.log(limit)
-    const planetas = await getListaPlanetas(page, limit);
-    console.log("planetas ", planetas)
+    //console.log(limit)
+    const planetas = await getAllPlanets(page, limit);
+   // console.log("planetas ", planetas)
     if(!planetas){
-        return res.status(404).json({error: 'NO hay planetas encontrados'})
+        return res.status(404).json({error: 'No se encontraron Planetas'})
     }
     return res.status(200).json(planetas)
 }
 
-export async function getSinPlaneta (req, res){
+export async function getSinglePlanet (req, res){
     const {id} = req.body
     console.log(id)
-    const planeta = await getSinglePlaneta(id);
-    //console.log("peliculas ", planeta)
+    const planeta = await getPlanet(id);
     if(!planeta){
-        return res.status(404).json({error: 'NO hay planetas encontrados'})
+        return res.status(404).json({error: 'No se encontraron Planetas'})
     }
     return res.status(200).json(planeta)
 }
 
-export async function getPersoPlane (req, res){
-    const planetas = await getPlan_Perso();
+export async function getPlanetsCharacters (req, res){
+    const planetas = await getPlanetsForCharacters();
     if(!planetas){
-        return res.status(404).json({error: 'NO hay planetas encontrados'})
+        return res.status(404).json({error: 'No se encontraron Planetas'})
     }
     return res.status(200).json(planetas)
 }
 
-export async function putPlanetas(req, res){
+export async function putPlanet(req, res){
     const data = req.body
-    const duplicado = await findDuplicatesPlaneta(data)
+    const duplicado = await findDuplicatesPlanets(data)
     if(duplicado.length>0){
-        return res.status(500).json({message:"el planeta ya esta registrado"})
+        return res.status(500).json({message:"El planeta ya está registrado"})
     }
-    const planeta = await actuPlaneta(data)
+    const existente = await getPlanet(data.id)
+        if(!existente||existente==null){
+            return res.status(500).json({message:"No existe este planeta para actualizar"})
+        }
+    const planeta = await updatePlanet(data)
     return res.status(200).json(planeta)
 }
 
-export async function delePlanetas(req, res){
+export async function deletePlanet(req, res){
     const {id} = req.body
-    const borrar = await borrPlaneta(id)
+    const borrar = await dropPlanet(id)
     if(borrar!==null){
-        return res.status(200).json({message:"Registro borrado con exito"})
+        return res.status(200).json({message:"Planeta borrado con exito"})
     }
     return res.status(500).json({message:"El planeta no se encuentra o ya fue borrado"})
 }

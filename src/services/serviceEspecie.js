@@ -1,6 +1,6 @@
 import { Especie } from "../models/modelEspecie.js"
 
-export async function crearEspecie(data){
+export async function createSpecie(data){
     try{
         const newEspecie = await Especie.create(data);
         return newEspecie
@@ -9,7 +9,7 @@ export async function crearEspecie(data){
     }
 }
 
-export async function actuEspecie(data){
+export async function updateSpecie(data){
     try{
         const especie = await Especie.findById(data.id);
         if(especie){
@@ -32,7 +32,7 @@ export async function actuEspecie(data){
     }
 }
 
-export async function getListaEspecie(page, limit){
+export async function getAllSpecies(page, limit){
     try{
        // const skip=(page-1)*limit
         const select= 'name classification designation average_height average_lifespan eye_colors hair_colors skin_colors language homeworld'
@@ -46,7 +46,7 @@ export async function getListaEspecie(page, limit){
     }
 }
 
-export async function getSingleEspecie(data){
+export async function getSingleSpecie(data){
     try{
         const especie = await Especie.findById(data).select('name classification designation average_height average_lifespan eye_colors hair_colors skin_colors language homeworld');
         return especie
@@ -55,7 +55,7 @@ export async function getSingleEspecie(data){
     }
 }
 
-export async function getEsp_Perso(){
+export async function getSpecieForCharacters(){
     try{
         const especie = await Especie.find({}, '_id name')
         return especie
@@ -64,7 +64,7 @@ export async function getEsp_Perso(){
     }
 }
 
-export async function findDuplicates_Especie(data){
+export async function findDuplicatesSpecie(data){
     try{
         const especie = await Especie.find({
             name:data.name,
@@ -84,10 +84,13 @@ export async function findDuplicates_Especie(data){
     }
 }
 
-export async function borrarEsp(id){
+export async function dropSpecie(id){
     try{
-        await Especie.findByIdAndDelete(id)
-        return {message:"Borrado con exito"}
+        const deleted = await Especie.findByIdAndDelete(id)
+        if(deleted){
+            return {message:"Borrado con éxito"}
+        }
+        return null
     } catch(error){
         console.error("Error al borrar la especie ", error)
     }

@@ -1,15 +1,15 @@
 import {Nave} from '../models/modelNave.js'
 
-export async function crearNave(data){
+export async function createStarship(data){
     try{
         const newNave = await Nave.create(data);
         return newNave
     }catch(error){
-        console.error("Error al crar nave ", error)
+        console.error("Error al crear nave ", error)
     }
 }
 
-export async function actuNave(data){
+export async function updateStarship(data){
     try{
         const nave = await Nave.findById(data.id)
         if(nave){
@@ -31,16 +31,19 @@ export async function actuNave(data){
     }
 }
 
-export async function borrNave(data){
+export async function dropStarship(data){
     try{
-        await Nave.findByIdAndDelete(data)
-        return {message:"Borrado con exito"}
+        const deleted = await Nave.findByIdAndDelete(data)
+        if(deleted){
+            return {message:"Borrado con éxito"}
+        }
+        return null
     } catch(error){
         console.error("Error al borrar nave ", error)
     }
 }
 
-export async function getListaNave(page, limit){
+export async function getAllStarships(page, limit){
     try{
         const select = 'name model starship_class length passengers max_atmosphering_speed hyperdrive_rating MGLT cargo_capacity consumables'
         const options = {select:select,page: page, limit:limit, lean:true, }
@@ -50,7 +53,7 @@ export async function getListaNave(page, limit){
         console.error("Error al consultar lista de naves ", error)
     }
 }
-export async function getNave_Perso(){
+export async function getStarshipsForCharacters(){
     try{
         const nave = await Nave.find({}, '_id name')
         return nave
@@ -59,15 +62,16 @@ export async function getNave_Perso(){
     }
 }
 
-export async function getSingleNave(data){
+export async function getSingleStarship(data){
     try{
-        const nave = await Nave.findById(data._id).select('name model starship_class length passengers max_atmosphering_speed hyperdrive_rating MGLT cargo_capacity consumables');
+        const nave = await Nave.findById(data).select('name model starship_class length passengers max_atmosphering_speed hyperdrive_rating MGLT cargo_capacity consumables');
+        console.log("nave", nave)
         return nave
     }catch(error){
         console.error("Error al consultar nave ", error);
     }
 }
-export async function findDuplicates_Nave(data){
+export async function findDuplicatesStarships(data){
     try{
         const nave = await Nave.find({
             name:data.name,

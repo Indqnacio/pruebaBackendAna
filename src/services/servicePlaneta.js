@@ -1,6 +1,6 @@
 import { Planeta } from "../models/modelPlaneta.js";
 
-export async function crearPlaneta(data){
+export async function createPlanet(data){
     try{
         const newPlaneta = await Planeta.create(data);
         return newPlaneta
@@ -9,7 +9,7 @@ export async function crearPlaneta(data){
     }
 }
 
-export async function actuPlaneta(data){
+export async function updatePlanet(data){
     try{
         const planeta = await Planeta.findById(data.id);
         if(planeta){
@@ -30,16 +30,19 @@ export async function actuPlaneta(data){
     }
 }
 
-export async function borrPlaneta(data){
+export async function dropPlanet(data){
     try{
-        await Planeta.findByIdAndDelete(data)
-        return {message:"Borrado con exito"}
+        const deleted = await Planeta.findByIdAndDelete(data)
+        if(deleted){
+            return {message:"Borrado con éxito"}
+        }
+        return null
     }catch(error){
         console.error("Error al borrar planeta ", error)
     }
 }
 
-export async function getListaPlanetas(page, limit){
+export async function getAllPlanets(page, limit){
     try{
         const select='_id name diameter rotation_period orbital_period gravity population climate terrain surface_water'
         const options={select:select,page: page, limit:limit, lean:true, }
@@ -50,7 +53,7 @@ export async function getListaPlanetas(page, limit){
     }
 }
 
-export async function getSinglePlaneta(data){
+export async function getPlanet(data){
     try{
         const planeta = await Planeta.findById(data).select('_id name diameter rotation_period orbital_period gravity population climate terrain surface_water');
         return planeta
@@ -59,16 +62,16 @@ export async function getSinglePlaneta(data){
     }
 }
 
-export async function getPlan_Perso(){
+export async function getPlanetsForCharacters(){
     try{
         const planetas = await Planeta.find({},'_id name');
         return planetas
     } catch(error){
-        console.error("Error al obtener el planeta ", error);
+        console.error("Error al obtener planetas ", error);
     }
 }
 
-export async function findDuplicatesPlaneta(data){
+export async function findDuplicatesPlanets(data){
     try{
         const planeta = await Planeta.find({
             name:data.name,
@@ -83,6 +86,6 @@ export async function findDuplicatesPlaneta(data){
         })
         return planeta
     }catch(error){
-        console.error("Error encontrando duplicados de personaje ", error)
+        console.error("Error encontrando duplicados de planetas ", error)
     }
 }

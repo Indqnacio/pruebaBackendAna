@@ -1,63 +1,63 @@
-import {findDuplicates_Nave, crearNave, actuNave, getListaNave, getNave_Perso, getSingleNave, borrNave} from "../services/serviceNave.js";
+import {findDuplicatesStarships, createStarship, updateStarship, getAllStarships , getStarshipsForCharacters, getSingleStarship, dropStarship} from "../services/serviceNave.js";
 
-export async function postNave (req, res){
+export async function postStarship (req, res){
    const data = req.body
-    const duplicado = await findDuplicates_Nave(data)
+    const duplicado = await findDuplicatesStarships(data)
     console.log(duplicado)
     if(duplicado.length>0){
-        return res.status(500).json({message:"La nave ya esta registrada"})
+        return res.status(500).json({message:"La nave ya está registrada"})
     }
-    const nave = await crearNave(data)
+    const nave = await createStarship(data)
     return res.status(200).json(nave)
 }
 
-export async function getNaves (req, res){
+export async function getStarships (req, res){
     const page = parseInt(req.query.page, 10) 
-    console.log(page)
     const limit = parseInt(req.query.limit,10) 
-    console.log(limit)
-    const naves = await getListaNave(page,limit);
-    //console.log("peliculas ", peliculas)
+    const naves = await getAllStarships(page,limit);
     if(!naves){
-        return res.status(404).json({error: 'NO hay naves encontradas'})
+        return res.status(404).json({error: 'No hay naves encontradas'})
     }
     return res.status(200).json(naves)
 }
 
-export async function getSin_Nave (req, res){
+export async function getStarship (req, res){
     const {id} = req.body
    // console.log(id)
-    const nave = await getSingleNave(id);
-   // console.log("peliculas ", peliculas)
+    const nave = await getSingleStarship(id);
+   console.log("nave ", nave)
     if(!nave){
-        return res.status(404).json({error: 'NO hay nave encontradas'})
+        return res.status(404).json({error: 'No hay naves encontradas'})
     }
     return res.status(200).json(nave)
 }
 
-export async function getPersoNave (req, res){
+export async function getStarshipsCharacters (req, res){
     
-    const naves = await getNave_Perso();
+    const naves = await getStarshipsForCharacters();
     if(!naves){
-        return res.status(404).json({error: 'NO hay naves encontradas'})
+        return res.status(404).json({error: 'No se encontraron naves'})
     }
     return res.status(200).json(naves)
 }
 
-export async function putNaves(req, res){
+export async function putStarships(req, res){
     const data = req.body
-    const duplicado = await findDuplicates_Nave(data)
+    const duplicado = await findDuplicatesStarships(data)
     if(duplicado.length>0){
-        return res.status(500).json({message:"La nave ya esta registrada"})
+        return res.status(500).json({message:"La nave ya está registrada"})
     }
-    const nave = await actuNave(data)
-    console.log(nave)
+    const existente = await getSingleStarship(data.id)
+    if(!existente||existente==null){
+        return res.status(500).json({message:"No existe esta nave para actualizar"})
+    }
+    const nave = await updateStarship(data)
     return res.status(200).json(nave)
 }
 
-export async function deleNave(req, res){
+export async function deleteStarship(req, res){
     const {id} = req.body
-    const borrar = await borrNave(id)
+    const borrar = await dropStarship(id)
     if(borrar!==null){
         return res.status(200).json({message:"Registro borrado con exito"})
     }

@@ -1,6 +1,6 @@
 import { Pelicula } from "../models/modelPeliculas.js";
 
-export async function crearPeli(data){
+export async function createMovie(data){
     try{
         const newPeli = await Pelicula.create(data)
         return newPeli
@@ -9,7 +9,7 @@ export async function crearPeli(data){
     }
 }
 
-export async function actuPeli(data){
+export async function updateMovie(data){
     try{
         const actuPeli = await Pelicula.findById(data.id)
         if(actuPeli){
@@ -25,16 +25,20 @@ export async function actuPeli(data){
     }
 }
 
-export async function borrarPeli(id){
+export async function dropMovie(id){
     try{
-        await Pelicula.findByIdAndDelete(id)
-        return {message:"Borrado con exito"}
+        const deleted = await Pelicula.findByIdAndDelete(id)
+        console.log(deleted)
+        if(deleted!==null){
+            return {message:"Borrada"}
+        }
+        return null
     } catch(error){
         console.error("Error al borrar la pelicula ", error)
     }
 }
 
-export async function getListaPelis(page, limit){
+export async function getAllMovies(page, limit){
     try{
         const select='_id title director producer'
         const options = {select:select,page: page, limit:limit, lean:true, }
@@ -45,7 +49,7 @@ export async function getListaPelis(page, limit){
     }
 }
 
-export async function getSinglePeli(data){
+export async function getSingleMovie(data){
     try{
         console.log(data)
         const single_peli = await Pelicula.findById(data).select('title director producer')
@@ -56,7 +60,7 @@ export async function getSinglePeli(data){
     }
 }
 
-export async function getPeli_Perso(){
+export async function getMoviesForCharacters(){
     try{
         const single_peli = await Pelicula.find({},'_id title')
         return single_peli
@@ -65,7 +69,7 @@ export async function getPeli_Perso(){
     }
 }
 
-export async function findDuplicatesPeli(data){
+export async function findDuplicatesMovies(data){
     try{
         const peli = await Pelicula.find({
             title:data.title,

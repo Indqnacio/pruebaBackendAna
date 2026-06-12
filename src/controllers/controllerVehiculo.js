@@ -1,70 +1,65 @@
-import {findDuplicatesVehiculo, crearVehiculo, actuVehi, getListaVehi, getVehi_Perso, getSingleVehi, borrVehi} from "../services/serviceVehiculo.js";
+import {findDuplicatesVehicle, createVehicle, updateVehicle, getAllVehicles, getVehiclesForCharacters, getSingleVehicle, dropVehicle} from "../services/serviceVehiculo.js";
 
-export async function postVehiculo (req, res){
+export async function postVehicle (req, res){
    const data = req.body
-    const duplicado = await findDuplicatesVehiculo(data)
-   // console.log(duplicado)
+    const duplicado = await findDuplicatesVehicle(data)
     if(duplicado.length>0){
-        return res.status(500).json({message:"el vehiculo ya esta registrado"})
+        return res.status(500).json({message:"El vehículo ya está registrado"})
     }
-    const vehiculo = await crearVehiculo(data)
+    const vehiculo = await createVehicle(data)
     return res.status(200).json(vehiculo)
 }
 
-export async function getVehiculos (req, res){
+export async function getVehicles (req, res){
     const page = parseInt(req.query.page, 10) 
-    console.log(page)
     const limit = parseInt(req.query.limit,10) 
-    console.log(limit)
-    const vehiculos = await getListaVehi(page,limit);
-    //console.log("peliculas ", peliculas)
+    const vehiculos = await getAllVehicles(page,limit);
     if(!vehiculos){
-        return res.status(404).json({error: 'NO hay vehiculos encontrados'})
+        return res.status(404).json({error: 'No se encontraron vehículos'})
     }
     return res.status(200).json(vehiculos)
 }
 
-export async function getSin_Vehi (req, res){
+export async function getVehicle (req, res){
     const {id} = req.body
    // console.log(id)
-    const vehiculo = await getSingleVehi(id);
+    const vehiculo = await getSingleVehicle(id);
    // console.log("peliculas ", peliculas)
     if(!vehiculo){
-        return res.status(404).json({error: 'NO hay vehiculo encontradas'})
+        return res.status(404).json({error: 'No se encontró el vehículo'})
     }
     return res.status(200).json(vehiculo)
 }
 
-export async function getPerso_Vehi (req, res){
+export async function getVehiclesChracters (req, res){
     
-    const vehiculos = await getVehi_Perso();
+    const vehiculos = await getVehiclesForCharacters();
     if(!vehiculos){
-        return res.status(404).json({error: 'NO hay vehculos encontradas'})
+        return res.status(404).json({error: 'No se encontraron vehículos'})
     }
     return res.status(200).json(vehiculos)
 }
 
-export async function putVehiculos(req, res){
+export async function putVehicle(req, res){
     const data = req.body
-    const duplicado = await findDuplicatesVehiculo(data)
+    const duplicado = await findDuplicatesVehicle(data)
     if(duplicado.length>0){
-        return res.status(500).json({message:"el vehiculo ya esta registrado"})
+        return res.status(500).json({message:"El vehículo ya está registrado"})
     }
-    const existente = await getSingleVehi(data.id)
-    console.log(existente)
+    const existente = await getSingleVehicle(data.id)
     if(!existente||existente==null){
-        return res.status(500).json({message:"no existe este vehiculo para actualizar"})
+        return res.status(500).json({message:"No existe este vehículo para actualizar"})
     }
-    const vahiculo = await actuVehi(data)
+    const vahiculo = await updateVehicle(data)
     console.log(vahiculo)
     return res.status(200).json(vahiculo)
 }
 
-export async function deleVehiculo(req, res){
+export async function deleteVehicle(req, res){
     const {id} = req.body
-    const borrar = await borrVehi(id)
+    const borrar = await dropVehicle(id)
     if(borrar!==null){
-        return res.status(200).json({message:"Registro borrado con exito"})
+        return res.status(200).json({message:"Registro borrado con éxito"})
     }
-        return res.status(500).json({message:"El vehiculo no se encuentra o ya fue borrado"})
+        return res.status(500).json({message:"El vehículo no se encuentra o ya fue borrado"})
 }

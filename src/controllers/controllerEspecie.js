@@ -1,65 +1,63 @@
-import {findDuplicates_Especie, crearEspecie, actuEspecie, getListaEspecie, getEsp_Perso, getSingleEspecie, borrarEsp} from "../services/serviceEspecie.js";
+import {findDuplicatesSpecie, createSpecie, updateSpecie, getAllSpecies, getSpecieForCharacters, getSingleSpecie, dropSpecie} from "../services/serviceEspecie.js";
 
-export async function postEspecie (req, res){
+export async function postSpecie (req, res){
    const data = req.body
-    const duplicado = await findDuplicates_Especie(data)
-    console.log(duplicado)
+    const duplicado = await findDuplicatesSpecie(data)
     if(duplicado.length>0){
-        return res.status(500).json({message:"La especie ya esta registrada"})
+        return res.status(500).json({message:"La especie ya está registrada"})
     }
-    const especie = await crearEspecie(data)
+    const especie = await createSpecie(data)
     return res.status(200).json(especie)
 }
 
-export async function getEspecies (req, res){
+export async function getSpecies (req, res){
     const page = parseInt(req.query.page, 10) 
-    console.log(page)
     const limit = parseInt(req.query.limit,10) 
-    console.log(limit)
-    const especies = await getListaEspecie(page,limit);
-    //console.log("especies ", especies)
+    const especies = await getAllSpecies(page,limit);
     
     if(!especies){
-        return res.status(404).json({error: 'NO hay especies encontradas'})
+        return res.status(404).json({error: 'No se encontraron especies'})
     }
     return res.status(200).json(especies)
 }
 
-export async function getSinEspecie (req, res){
+export async function getSpecie (req, res){
     const {id} = req.body
-    //console.log(id)
-    const especie = await getSingleEspecie(id);
-   // console.log("peliculas ", peliculas)
+    const especie = await getSingleSpecie(id);
     if(!especie){
-        return res.status(404).json({error: 'NO hay especies encontradas'})
+        return res.status(404).json({error: 'No se encontraron especies'})
     }
     return res.status(200).json(especie)
 }
 
-export async function getPersoEspe (req, res){
+export async function getSpeciesCharacters (req, res){
     
-    const especies = await getEsp_Perso();
+    const especies = await getSpecieForCharacters();
     if(!especies){
-        return res.status(404).json({error: 'NO hay especies encontradas'})
+        return res.status(404).json({error: 'No se encontraron especies'})
     }
     return res.status(200).json(especies)
 }
 
-export async function putEspecie(req, res){
+export async function putSpecie(req, res){
     const data = req.body
-    const duplicado = await findDuplicates_Especie(data)
+    const duplicado = await findDuplicatesSpecie(data)
     if(duplicado.length>0){
-        return res.status(500).json({message:"La especie ya esta registrada"})
+        return res.status(500).json({message:"La especie ya está registrada"})
+    }    
+    const existente = await getSingleSpecie(data.id)
+    if(!existente||existente==null){
+        return res.status(500).json({message:"No existe esta especie para actualizar"})
     }
-    const especie = await actuEspecie(data)
+    const especie = await updateSpecie(data)
     return res.status(200).json(especie)
 }
 
-export async function delEspecie(req, res){
+export async function deleteSpecie(req, res){
     const {id} = req.body
-    const borrar = await borrarEsp(id)
+    const borrar = await dropSpecie(id)
     if(borrar!==null){
-        return res.status(200).json({message:"Registro borrado con exito"})
+        return res.status(200).json({message:"Registro borrado con éxito"})
     }
     return res.status(500).json({message:"La especie no se encuentra o ya fue borrada"})
 }

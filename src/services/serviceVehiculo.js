@@ -1,6 +1,6 @@
 import {Vehiculo} from '../models/modelVehiculos.js'
 
-export async function crearVehiculo(data){
+export async function createVehicle(data){
     try{
         const newVehi = await Vehiculo.create(data);
         return newVehi
@@ -9,19 +9,16 @@ export async function crearVehiculo(data){
     }
 }
 
-export async function actuVehi(data){
+export async function updateVehicle(data){
     try{
         const vehi = await Vehiculo.findById(data.id)
         if(vehi){
             vehi.name=data.name||vehi.name
             vehi.model=data.model||vehi.model
-            //nave.starship_class=data.starship_class||nave.starship_class
             vehi.vehicle_class=data.vehicle_class||vehi.vehicle_class
             vehi.length=data.length||vehi.length
             vehi.passengers=data.passengers||vehi.passengers
             vehi.max_atmosphering_speed=data.max_atmosphering_speed||vehi.max_atmosphering_speed
-            //nave.hyperdrive_rating=data.hyperdrive_rating||nave.hyperdrive_rating
-            //nave.MGLT=data.MGLT||nave.MGLT
             vehi.cargo_capacity=data.cargo_capacity||vehi.cargo_capacity
             vehi.consumables=data.consumables||vehi.consumables
             return vehi
@@ -32,23 +29,19 @@ export async function actuVehi(data){
     }
 }
 
-export async function borrVehi(data){
+export async function dropVehicle(data){
     try{
-        const vehi_borr=  await Vehiculo.findByIdAndDelete(data)
-        console.log(vehi_borr)
-        if(vehi_borr===null){
-            return null
-        }else{
+        const deleted =  await Vehiculo.findByIdAndDelete(data)
+        if(deleted){
             return {message:"Borrado con éxito"}
         }
-        
-        
+        return null
     } catch(error){
         console.error("Error al borrar vehiculo ", error)
     }
 }
 
-export async function getListaVehi(page,limit){
+export async function getAllVehicles(page,limit){
     try{
         const select='name model vehicle_class length passengers max_atmosphering_speed cargo_capacity consumables'
         const options = {select:select,page: page, limit:limit, lean:true, }
@@ -58,7 +51,7 @@ export async function getListaVehi(page,limit){
         console.error("Error al consultar lista de vehiculos ", error)
     }
 }
-export async function getVehi_Perso(){
+export async function getVehiclesForCharacters(){
     try{
         const vehi = await Vehiculo.find({}, '_id name')
         return vehi
@@ -67,7 +60,7 @@ export async function getVehi_Perso(){
     }
 }
 
-export async function getSingleVehi(data){
+export async function getSingleVehicle(data){
     try{
         const vehi = await Vehiculo.findById(data).select('name model vehicle_class length passengers max_atmosphering_speed cargo_capacity consumables')
         return vehi
@@ -75,7 +68,7 @@ export async function getSingleVehi(data){
         console.error("Error al consultar nave ", error);
     }
 }
-export async function findDuplicatesVehiculo(data){
+export async function findDuplicatesVehicle(data){
     try{
         const vehiculo = await Vehiculo.find({
             name:data.name,
@@ -89,6 +82,6 @@ export async function findDuplicatesVehiculo(data){
         })
         return vehiculo
     }catch(error){
-        console.error("Error encontrando duplicados de personaje ", error)
+        console.error("Error encontrando duplicados de vehículos ", error)
     }
 }
