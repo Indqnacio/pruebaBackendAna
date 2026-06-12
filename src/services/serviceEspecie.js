@@ -32,10 +32,15 @@ export async function actuEspecie(data){
     }
 }
 
-export async function getListaEspecie(){
+export async function getListaEspecie(page, limit){
     try{
-        const lista_especies = await Especie.find().select('name classification designation average_height average_lifespan eye_colors hair_colors skin_colors language homeworld');
-        return lista_especies
+       // const skip=(page-1)*limit
+        const select= 'name classification designation average_height average_lifespan eye_colors hair_colors skin_colors language homeworld'
+        const options = {select:select,page: page, limit:limit, lean:true, }
+        const lista_especies = await Especie.paginate({}, options);
+        
+        //const total_pages = Math.ceil(totalDocs/limit);
+        return {lista_especies}
     }catch(error){
         console.error("Error al consultar lista de especies ", error)
     }

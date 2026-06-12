@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import mongoosePaginate from "mongoose-paginate-v2";
 
 export const especieSchema = new mongoose.Schema({
     name:{
@@ -33,5 +34,5 @@ export const especieSchema = new mongoose.Schema({
 },{
     timestamps: true
 });
-
+especieSchema.plugin(mongoosePaginate)
 export const Especie = mongoose.model('Especie', especieSchema);

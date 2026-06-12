@@ -12,12 +12,17 @@ export async function postEspecie (req, res){
 }
 
 export async function getEspecies (req, res){
-    const especies = await getListaEspecie();
-    //console.log("peliculas ", peliculas)
+    const page = parseInt(req.query.page, 10) 
+    console.log(page)
+    const limit = parseInt(req.query.limit,10) 
+    console.log(limit)
+    const especies = await getListaEspecie(page,limit);
+    //console.log("especies ", especies)
+    
     if(!especies){
         return res.status(404).json({error: 'NO hay especies encontradas'})
     }
-    return res.status(200).json(especies)
+    return res.status(200).json({data:especies})
 }
 
 export async function getSinEspecie (req, res){
