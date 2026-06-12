@@ -44,9 +44,11 @@ export async function borrarPerso(data){
     }
 }
 
-export async function getListaPerso(){
+export async function getListaPerso(page, limit){
     try{
-        const lista_personajes = await Personaje.find().select('_id name birth_year eye_color gender hair_color height mass skin_color films species starships vehicles');
+        const select='_id name birth_year eye_color gender hair_color height mass skin_color films species starships vehicles'
+        const options = {select:select,page: page, limit:limit, lean:true, }
+        const lista_personajes = await Personaje.paginate({}, options);
         return lista_personajes
     } catch(error){
         console.error("Error al obtener lista de peliculas ", error)

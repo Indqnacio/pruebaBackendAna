@@ -13,7 +13,11 @@ export async function postPersonaje (req, res){
 }
 
 export async function getPersonajes (req, res){
-    const personajes = await getListaPerso();
+    const page = parseInt(req.query.page, 10) 
+    console.log(page)
+    const limit = parseInt(req.query.limit,10) 
+    console.log(limit)
+    const personajes = await getListaPerso(page, limit);
     //console.log("peliculas ", peliculas)
     if(!personajes){
         return res.status(404).json({error: 'NO hay personajes encontrados'})
