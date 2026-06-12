@@ -33,4 +33,4 @@ app.get('/', (req, res) => {
   res.send("Hola");
 })
 connectDB();
-//seedDB();
+seedDB();
