@@ -52,7 +52,8 @@ export async function putPlanetas(req, res){
 export async function delePlanetas(req, res){
     const {id} = req.body
     const borrar = await borrPlaneta(id)
-    if(borrar){
+    if(borrar!==null){
         return res.status(200).json({message:"Registro borrado con exito"})
     }
+    return res.status(500).json({message:"El planeta no se encuentra o ya fue borrado"})
 }

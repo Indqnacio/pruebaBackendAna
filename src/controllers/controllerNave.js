@@ -54,7 +54,8 @@ export async function putNaves(req, res){
 export async function deleNave(req, res){
     const {id} = req.body
     const borrar = await borrNave(id)
-    if(borrar){
+    if(borrar!==null){
         return res.status(200).json({message:"Registro borrado con exito"})
     }
+    return res.status(500).json({message:"La nave no se encuentra o ya fue borrada"})
 }

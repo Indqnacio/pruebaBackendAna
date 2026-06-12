@@ -53,7 +53,8 @@ export async function putPeliculas(req, res){
 export async function delePeliculas(req, res){
     const {id} = req.body
     const borrar = await borrarPeli(id)
-    if(borrar){
+    if(borrar!==null){
         return res.status(200).json({message:"Registro borrado con exito"})
     }
+    return res.status(500).json({message:"La pelicula no se encuentra o ya fue borrada"})
 }

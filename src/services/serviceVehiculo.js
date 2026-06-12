@@ -11,7 +11,7 @@ export async function crearVehiculo(data){
 
 export async function actuVehi(data){
     try{
-        const vehi = await Vehiculo.findById(data._id)
+        const vehi = await Vehiculo.findById(data.id)
         if(vehi){
             vehi.name=data.name||vehi.name
             vehi.model=data.model||vehi.model
@@ -32,10 +32,17 @@ export async function actuVehi(data){
     }
 }
 
-export default function borrVehi(data){
+export async function borrVehi(data){
     try{
-        await Vehiculo.findByIdAndDelete(data._id)
-        return {message:"Borrado con exito"}
+        const vehi_borr=  await Vehiculo.findByIdAndDelete(data)
+        console.log(vehi_borr)
+        if(vehi_borr===null){
+            return null
+        }else{
+            return {message:"Borrado con éxito"}
+        }
+        
+        
     } catch(error){
         console.error("Error al borrar vehiculo ", error)
     }
@@ -43,7 +50,7 @@ export default function borrVehi(data){
 
 export async function getListaVehi(){
     try{
-        const lista_vehiculos = await Vehiculo.find();
+        const lista_vehiculos = await Vehiculo.find().select('name model vehicle_class length passengers max_atmosphering_speed cargo_capacity consumables');
         return lista_vehiculos
     }catch(error){
         console.error("Error al consultar lista de vehiculos ", error)
@@ -60,7 +67,7 @@ export async function getVehi_Perso(){
 
 export async function getSingleVehi(data){
     try{
-        const vehi = await Vehiculo.findById(data._id)
+        const vehi = await Vehiculo.findById(data).select('name model vehicle_class length passengers max_atmosphering_speed cargo_capacity consumables')
         return vehi
     }catch(error){
         console.error("Error al consultar nave ", error);
@@ -68,7 +75,7 @@ export async function getSingleVehi(data){
 }
 export async function findDuplicatesVehiculo(data){
     try{
-        const planeta = await Planeta.find({
+        const vehiculo = await Vehiculo.find({
             name:data.name,
             model: data.model,
             vehicle_class: data.vehicle_class,
@@ -78,7 +85,7 @@ export async function findDuplicatesVehiculo(data){
             cargo_capacity: data.cargo_capacity,
             consumables: data.consumables
         })
-        return planeta
+        return vehiculo
     }catch(error){
         console.error("Error encontrando duplicados de personaje ", error)
     }

@@ -33,7 +33,7 @@ export async function actuNave(data){
 
 export async function borrNave(data){
     try{
-        await Nave.findByIdAndDelete(data._id)
+        await Nave.findByIdAndDelete(data)
         return {message:"Borrado con exito"}
     } catch(error){
         console.error("Error al borrar nave ", error)

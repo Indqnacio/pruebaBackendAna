@@ -53,7 +53,8 @@ export async function putEspecie(req, res){
 export async function delEspecie(req, res){
     const {id} = req.body
     const borrar = await borrarEsp(id)
-    if(borrar){
+    if(borrar!==null){
         return res.status(200).json({message:"Registro borrado con exito"})
     }
+    return res.status(500).json({message:"La especie no se encuentra o ya fue borrada"})
 }
