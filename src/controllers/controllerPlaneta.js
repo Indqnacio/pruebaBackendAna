@@ -3,7 +3,6 @@ import {createPlanet, findDuplicatesPlanets, updatePlanet, getAllPlanets, getPla
 export async function postPlanet (req, res){
    const data = req.body
     const duplicado = await findDuplicatesPlanets(data)
-    console.log(duplicado)
     if(duplicado.length>0){
         return res.status(500).json({message:"El planeta ya está registrado"})
     }
@@ -13,13 +12,10 @@ export async function postPlanet (req, res){
 
 export async function getPlanets (req, res){
     const page = parseInt(req.query.page, 10) 
-   // console.log(page)
     const limit = parseInt(req.query.limit,10) 
-    //console.log(limit)
     const planetas = await getAllPlanets(page, limit);
-   console.log("planetas ", planetas)
     if(!planetas){
-        return res.status(404).json({error: 'No se encontraron Planetas'})
+        return res.status(404).json({message: 'No se encontraron Planetas'})
     }
     return res.status(200).json(planetas)
 }
@@ -29,7 +25,7 @@ export async function getSinglePlanet (req, res){
     console.log(id)
     const planeta = await getPlanet(id);
     if(!planeta){
-        return res.status(404).json({error: 'No se encontraron Planetas'})
+        return res.status(404).json({message: 'No se encontraron Planetas'})
     }
     return res.status(200).json(planeta)
 }
@@ -37,7 +33,7 @@ export async function getSinglePlanet (req, res){
 export async function getPlanetsCharacters (req, res){
     const planetas = await getPlanetsForCharacters();
     if(!planetas){
-        return res.status(404).json({error: 'No se encontraron Planetas'})
+        return res.status(404).json({message: 'No se encontraron Planetas'})
     }
     return res.status(200).json(planetas)
 }
@@ -48,7 +44,7 @@ export async function putPlanet(req, res){
     if(duplicado.length>0){
         return res.status(500).json({message:"El planeta ya está registrado"})
     }
-    const existente = await getPlanet(data.id)
+    const existente = await getPlanet(data._id)
         if(!existente||existente==null){
             return res.status(500).json({message:"No existe este planeta para actualizar"})
         }
@@ -63,4 +59,8 @@ export async function deletePlanet(req, res){
         return res.status(200).json({message:"Planeta borrado con exito"})
     }
     return res.status(500).json({message:"El planeta no se encuentra o ya fue borrado"})
+}
+
+export async function getPlanetsWOPag(req, res){
+    
 }

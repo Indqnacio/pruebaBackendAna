@@ -11,7 +11,7 @@ export async function createPlanet(data){
 
 export async function updatePlanet(data){
     try{
-        const planeta = await Planeta.findById(data.id);
+        const planeta = await Planeta.findById(data._id);
         if(planeta){
             planeta.name =  data.name||planeta.name;
            planeta.diameter = data.diameter||planeta.diameter;

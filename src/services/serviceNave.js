@@ -11,7 +11,7 @@ export async function createStarship(data){
 
 export async function updateStarship(data){
     try{
-        const nave = await Nave.findById(data.id)
+        const nave = await Nave.findById(data._id)
         if(nave){
             nave.name=data.name||nave.name
             nave.model=data.model||nave.model
@@ -23,9 +23,9 @@ export async function updateStarship(data){
             nave.MGLT=data.MGLT||nave.MGLT
             nave.cargo_capacity=data.cargo_capacity||nave.cargo_capacity
             nave.consumables=data.consumables||nave.consumables
-            return nave
+            await nave.save();
         }
-        
+        return nave
     } catch(error){
         console.error("Error al actualizar nave ", error);
     }

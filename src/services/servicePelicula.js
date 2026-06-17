@@ -11,7 +11,7 @@ export async function createMovie(data){
 
 export async function updateMovie(data){
     try{
-        const actuPeli = await Pelicula.findById(data.id)
+        const actuPeli = await Pelicula.findById(data._id)
         if(actuPeli){
             actuPeli.title = data.title || actuPeli.title
             actuPeli.director = data.director || actuPeli.director

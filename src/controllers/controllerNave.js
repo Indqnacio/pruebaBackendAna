@@ -3,7 +3,6 @@ import {findDuplicatesStarships, createStarship, updateStarship, getAllStarships
 export async function postStarship (req, res){
    const data = req.body
     const duplicado = await findDuplicatesStarships(data)
-    console.log(duplicado)
     if(duplicado.length>0){
         return res.status(500).json({message:"La nave ya está registrada"})
     }
@@ -23,9 +22,7 @@ export async function getStarships (req, res){
 
 export async function getStarship (req, res){
     const {id} = req.body
-   // console.log(id)
     const nave = await getSingleStarship(id);
-   console.log("nave ", nave)
     if(!nave){
         return res.status(404).json({error: 'No hay naves encontradas'})
     }
@@ -47,7 +44,7 @@ export async function putStarships(req, res){
     if(duplicado.length>0){
         return res.status(500).json({message:"La nave ya está registrada"})
     }
-    const existente = await getSingleStarship(data.id)
+    const existente = await getSingleStarship(data._id)
     if(!existente||existente==null){
         return res.status(500).json({message:"No existe esta nave para actualizar"})
     }
