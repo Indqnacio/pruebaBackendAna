@@ -46,7 +46,7 @@ export async function putVehicle(req, res){
     if(duplicado.length>0){
         return res.status(500).json({message:"El vehículo ya está registrado"})
     }
-    const existente = await getSingleVehicle(data.id)
+    const existente = await getSingleVehicle(data._id)
     if(!existente||existente==null){
         return res.status(500).json({message:"No existe este vehículo para actualizar"})
     }

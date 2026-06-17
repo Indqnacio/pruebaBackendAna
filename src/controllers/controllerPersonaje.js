@@ -40,11 +40,13 @@ export async function charactersByName (req, res){
 
 export async function putCharacter(req, res){
     const data = req.body
+    console.log(data)
     const duplicado = await findDuplicatesCharacter(data)
+    console.log("duplicado ",duplicado);
     if(duplicado.length>0){
         return res.status(500).json({message:"el personaje ya esta registrado"})
     }
-    const existente = await getSingleCharacter(data.id)
+    const existente = await getSingleCharacter(data._id)
     if(!existente||existente==null){
         return res.status(500).json({message:"No existe este personaje para actualizar"})
     }

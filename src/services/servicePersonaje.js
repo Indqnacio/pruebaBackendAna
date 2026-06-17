@@ -11,7 +11,7 @@ export async function createCharacter(data){
 
 export async function updateCharacter(data){
     try{
-        const personaje = await Personaje.findById(data.id)
+        const personaje = await Personaje.findById(data._id)
         if(personaje){
             personaje.name = data.name || personaje.name
             personaje.birth_year = data.birth_year || personaje.birth_year
@@ -90,7 +90,8 @@ export async function getCharactersByName(data){
 export async function findDuplicatesCharacter(data){
     try{
         const personaje = await Personaje.find({
-            name:data.name
+            name:data.name,
+            _id: { $ne: data._id }
         })
         return personaje
     }catch(error){

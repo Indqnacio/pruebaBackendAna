@@ -74,7 +74,8 @@ export async function findDuplicatesMovies(data){
         const peli = await Pelicula.find({
             title:data.title,
             director: data.director,
-            producer: data.producer
+            producer: data.producer,
+            _id: { $ne: data._id }
         })
         return peli
     }catch(error){

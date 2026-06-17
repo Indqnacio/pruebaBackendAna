@@ -1,7 +1,9 @@
 import {findDuplicatesMovies, createMovie, updateMovie, getAllMovies, getMoviesForCharacters, getSingleMovie, dropMovie} from "../services/servicePelicula.js";
 
 export async function postMovies (req, res){
+    
    const data = req.body
+   console.log("SE QUIERE AGREGAR LA PELICULA ", data)
     const duplicado = await findDuplicatesMovies(data)
     if(duplicado.length>0){
         return res.status(500).json({message:"La película ya está registrada"})

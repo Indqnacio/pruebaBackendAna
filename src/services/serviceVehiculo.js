@@ -11,7 +11,7 @@ export async function createVehicle(data){
 
 export async function updateVehicle(data){
     try{
-        const vehi = await Vehiculo.findById(data.id)
+        const vehi = await Vehiculo.findById(data._id)
         if(vehi){
             vehi.name=data.name||vehi.name
             vehi.model=data.model||vehi.model
@@ -21,9 +21,9 @@ export async function updateVehicle(data){
             vehi.max_atmosphering_speed=data.max_atmosphering_speed||vehi.max_atmosphering_speed
             vehi.cargo_capacity=data.cargo_capacity||vehi.cargo_capacity
             vehi.consumables=data.consumables||vehi.consumables
-            return vehi
+            await vehi.save();
         }
-        
+        return vehi
     } catch(error){
         console.error("Error al actualizar nave ", error);
     }
@@ -78,7 +78,8 @@ export async function findDuplicatesVehicle(data){
             passengers: data.passengers,
             max_atmosphering_speed: data.max_atmosphering_speed,
             cargo_capacity: data.cargo_capacity,
-            consumables: data.consumables
+            consumables: data.consumables,
+            _id: { $ne: data._id }
         })
         return vehiculo
     }catch(error){

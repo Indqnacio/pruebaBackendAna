@@ -82,7 +82,8 @@ export async function findDuplicatesPlanets(data){
             population: data.population,
             climate: data.climate,
             terrain: data.terrain,
-            surface_water: data.surface_water
+            surface_water: data.surface_water,
+            _id: { $ne: data._id }
         })
         return planeta
     }catch(error){

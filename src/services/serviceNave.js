@@ -83,7 +83,8 @@ export async function findDuplicatesStarships(data){
             hyperdrive_rating: data.hyperdrive_rating,
             MGLT: data.MGLT,
             cargo_capacity: data.cargo_capacity,
-            consumables: data.consumables
+            consumables: data.consumables,
+            _id: { $ne: data._id }
         })
         return nave
     }catch(error){

@@ -82,7 +82,8 @@ export async function findDuplicatesSpecie(data){
             hair_colors: data.hair_colors,
             skin_colors: data.skin_colors,
             language: data.language,
-            homeworld: data.homeworld
+            homeworld: data.homeworld,
+            _id: { $ne: data._id }
         })
         return especie
     }catch(error){
