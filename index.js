@@ -21,8 +21,9 @@ const app = express();
     process.exit(1);
   }
 }
-app.use(cors());
+
 app.use(express.json())
+app.use(cors());
 app.use(apiRoues);
 
 app.listen(port, () => {

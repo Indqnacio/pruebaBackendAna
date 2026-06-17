@@ -189,7 +189,7 @@ async function relacionarPersonajes(personajes_api){
                 peliculas_bien
             }
         }) 
-        const planeta_id = planetas_dict[personaje.url]
+        const planeta_id = planetas_dict[personaje.homeworld]
         return{
             name: personaje.name,
             birth_year: personaje.birth_year,

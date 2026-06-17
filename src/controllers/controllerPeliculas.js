@@ -6,12 +6,16 @@ export async function postMovies (req, res){
     console.log(duplicado)
     if(duplicado.length>0){
         return res.status(500).json({message:"La película ya está registrada"})
-    }
-    const peli = await createMovie(data)
+    }else{
+         const peli = await createMovie(data)
     return res.status(200).json(peli)
+    }
+
+   
 }
 
 export async function getMovies (req, res){
+    console.log("entro a peliculas")
     const page = parseInt(req.query.page, 10) 
     //console.log(page)
     const limit = parseInt(req.query.limit,10) 

@@ -49,9 +49,21 @@ export async function dropCharacter(data){
 
 export async function getAllCharacters(page, limit){
     try{
-        const select='_id name birth_year eye_color gender hair_color height mass skin_color films species starships vehicles'
-        const options = {select:select,page: page, limit:limit, lean:true, }
+        const select='_id homeworld birth_year eye_color gender hair_color height mass skin_color films species name starships vehicles'
+        const populate=('homeworld','name')
+        const options = {
+            select:select, 
+            page: page, 
+            limit:limit, 
+            lean:true, 
+            populate:[{path:'homeworld', select:'name'},
+                    {path:'films', select:'title'},
+                    {path:'species', select:'name'},
+                    {path:'vehicles', select:'name'},
+                    {path:'starships', select:'name'},
+            ]}
         const lista_personajes = await Personaje.paginate({}, options);
+        //console.log(lista_personajes[1].homeworld)
         return lista_personajes
     } catch(error){
         console.error("Error al obtener lista de personajes ", error)
@@ -60,7 +72,7 @@ export async function getAllCharacters(page, limit){
 
 export async function getSingleCharacter(data){
     try{
-        const personaje = await Personaje.findById(data).select('_id name birth_year eye_color gender hair_color height mass skin_color films species starships vehicles');;
+        const personaje = await Personaje.findById(data).select('_id name birth_year eye_color gender hair_color height mass skin_color films species starships vehicles homeworld');;
         return personaje
     } catch(error){
         console.error("Error al obtener personaje ", error)
@@ -69,7 +81,7 @@ export async function getSingleCharacter(data){
 
 export async function getCharactersByName(data){
     try{
-        const personaje = await Personaje.findOne({name: data}).select('_id name birth_year eye_color gender hair_color height mass skin_color films species starships vehicles');
+        const personaje = await Personaje.findOne({name: data}).select('_id name birth_year eye_color gender hair_color height mass skin_color films species starships vehicles homeworld');
         return personaje
     }catch(error){
         console.error("Error al obtener personaje")

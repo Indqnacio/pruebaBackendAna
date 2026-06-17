@@ -36,11 +36,17 @@ export async function getAllSpecies(page, limit){
     try{
        // const skip=(page-1)*limit
         const select= 'name classification designation average_height average_lifespan eye_colors hair_colors skin_colors language homeworld'
-        const options = {select:select,page: page, limit:limit, lean:true, }
+        const options = {
+            select:select,
+            page: page, 
+            limit:limit, 
+            lean:true, 
+            populate:[{path:'homeworld', select:'name'}]}
+    
         const lista_especies = await Especie.paginate({}, options);
         
         //const total_pages = Math.ceil(totalDocs/limit);
-        return {lista_especies}
+        return lista_especies
     }catch(error){
         console.error("Error al consultar lista de especies ", error)
     }

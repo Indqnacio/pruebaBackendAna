@@ -11,6 +11,7 @@ export async function postSpecie (req, res){
 }
 
 export async function getSpecies (req, res){
+    console.log("entro")
     const page = parseInt(req.query.page, 10) 
     const limit = parseInt(req.query.limit,10) 
     const especies = await getAllSpecies(page,limit);

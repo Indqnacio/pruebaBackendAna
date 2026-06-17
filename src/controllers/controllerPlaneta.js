@@ -17,7 +17,7 @@ export async function getPlanets (req, res){
     const limit = parseInt(req.query.limit,10) 
     //console.log(limit)
     const planetas = await getAllPlanets(page, limit);
-   // console.log("planetas ", planetas)
+   console.log("planetas ", planetas)
     if(!planetas){
         return res.status(404).json({error: 'No se encontraron Planetas'})
     }
