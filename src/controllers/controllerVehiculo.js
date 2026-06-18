@@ -22,9 +22,7 @@ export async function getVehicles (req, res){
 
 export async function getVehicle (req, res){
     const {id} = req.body
-   // console.log(id)
     const vehiculo = await getSingleVehicle(id);
-   // console.log("peliculas ", peliculas)
     if(!vehiculo){
         return res.status(404).json({error: 'No se encontró el vehículo'})
     }
@@ -51,7 +49,6 @@ export async function putVehicle(req, res){
         return res.status(500).json({message:"No existe este vehículo para actualizar"})
     }
     const vahiculo = await updateVehicle(data)
-    console.log(vahiculo)
     return res.status(200).json(vahiculo)
 }
 

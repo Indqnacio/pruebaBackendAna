@@ -65,7 +65,6 @@ export async function getStarshipsForCharacters(){
 export async function getSingleStarship(data){
     try{
         const nave = await Nave.findById(data).select('name model starship_class length passengers max_atmosphering_speed hyperdrive_rating MGLT cargo_capacity consumables');
-        console.log("nave", nave)
         return nave
     }catch(error){
         console.error("Error al consultar nave ", error);

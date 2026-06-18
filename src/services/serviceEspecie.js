@@ -11,7 +11,7 @@ export async function createSpecie(data){
 
 export async function updateSpecie(data){
     try{
-        const especie = await Especie.findById(data.id);
+        const especie = await Especie.findById(data._id);
         if(especie){
             especie.name = data.name||especie.name
             especie.classification=data.classification|| especie.classification

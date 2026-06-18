@@ -3,7 +3,6 @@ import {findDuplicatesMovies, createMovie, updateMovie, getAllMovies, getMoviesF
 export async function postMovies (req, res){
     
    const data = req.body
-   console.log("SE QUIERE AGREGAR LA PELICULA ", data)
     const duplicado = await findDuplicatesMovies(data)
     if(duplicado.length>0){
         return res.status(500).json({message:"La película ya está registrada"})
@@ -59,7 +58,8 @@ export async function putMovie(req, res){
 }
 
 export async function deleteMovie(req, res){
-    const {id} = req.body
+    const id = req.body.id
+    const find = await getSingleMovie(id);
     const borrar = await dropMovie(id)
     if(borrar!==null){
         return res.status(200).json({message:"Registro borrado con exito"})

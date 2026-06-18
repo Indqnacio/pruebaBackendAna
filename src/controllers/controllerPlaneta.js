@@ -22,7 +22,6 @@ export async function getPlanets (req, res){
 
 export async function getSinglePlanet (req, res){
     const {id} = req.body
-    console.log(id)
     const planeta = await getPlanet(id);
     if(!planeta){
         return res.status(404).json({message: 'No se encontraron Planetas'})

@@ -28,7 +28,6 @@ export async function updateMovie(data){
 export async function dropMovie(id){
     try{
         const deleted = await Pelicula.findByIdAndDelete(id)
-        console.log(deleted)
         if(deleted!==null){
             return {message:"Borrada"}
         }
@@ -51,9 +50,7 @@ export async function getAllMovies(page, limit){
 
 export async function getSingleMovie(data){
     try{
-        console.log(data)
         const single_peli = await Pelicula.findById(data).select('title director producer')
-        console.log(single_peli)
         return single_peli
     } catch(error){
         console.error("Error al obtener pelicula ", error)

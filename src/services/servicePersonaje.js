@@ -63,7 +63,6 @@ export async function getAllCharacters(page, limit){
                     {path:'starships', select:'name'},
             ]}
         const lista_personajes = await Personaje.paginate({}, options);
-        //console.log(lista_personajes[1].homeworld)
         return lista_personajes
     } catch(error){
         console.error("Error al obtener lista de personajes ", error)

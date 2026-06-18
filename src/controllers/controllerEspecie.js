@@ -45,7 +45,7 @@ export async function putSpecie(req, res){
     if(duplicado.length>0){
         return res.status(500).json({message:"La especie ya está registrada"})
     }    
-    const existente = await getSingleSpecie(data.id)
+    const existente = await getSingleSpecie(data._id)
     if(!existente||existente==null){
         return res.status(500).json({message:"No existe esta especie para actualizar"})
     }
@@ -54,7 +54,8 @@ export async function putSpecie(req, res){
 }
 
 export async function deleteSpecie(req, res){
-    const {id} = req.body
+    const id = req.body.id;
+    const find = await getSingleSpecie(id);
     const borrar = await dropSpecie(id)
     if(borrar!==null){
         return res.status(200).json({message:"Registro borrado con éxito"})
